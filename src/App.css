@@ -6,4 +6,10 @@ body {
 .movie-app > .row {
   overflow-x: auto;
   flex-wrap: nowrap;
+  
 }
+
+img {
+  height: 570px;
+}
+

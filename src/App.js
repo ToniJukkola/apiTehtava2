@@ -5,6 +5,8 @@ import {useState, useEffect} from 'react';
 import Movies from './components/MovieList';
 import MovieListHeader from './components/MovieListHeader';
 import SearchBox from './components/SearchBox';
+import AddFavourite from './components/AddFavourite';
+import RemoveFavourites from './components/Remove';
 
 const URL = 'http://www.omdbapi.com/';
 const API_KEY = '81981094';
@@ -16,6 +18,7 @@ function App() {
  // const [selectedItem, setSelectedItem] = useState(null);
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [favourites, setFavourites] = useState([]);
 
   const getMovieRequest = async () => {
     const kutsu = URL + '?s=' + searchValue + '&apikey=' + API_KEY;
@@ -32,6 +35,18 @@ function App() {
   useEffect(()=>{
     getMovieRequest(searchValue);
   }, [searchValue]);
+
+  const addFavouriteMovie = (movies) => {
+    const newFavouriteList = [...favourites, movies];
+    setFavourites(newFavouriteList);
+  };
+
+  const Remove = (movies) => {
+    const newFavouriteList = favourites.filter((favourites) => favourites.imdbID !== movies.imdbID
+  );
+    setFavourites(newFavouriteList);
+
+};
   
   return (
     <div className='container-fluid movie-app'>
@@ -40,7 +55,20 @@ function App() {
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       <div className='row'>
-      <Movies movies={movies} />
+      <Movies movies={movies} 
+      handleFavouritesClick={addFavouriteMovie} 
+      FavouriteComponent = {AddFavourite}
+      />
+      </div>
+      <div className='row d-flex align-items-center mt-4 mb-4'>
+        <MovieListHeader header='Your favourite movies' />
+         </div> 
+         <div className='row'>
+      <Movies 
+      movies={favourites} 
+      handleFavouritesClick={Remove} 
+      FavouriteComponent = {RemoveFavourites}
+      />
       </div>
     </div>
   );

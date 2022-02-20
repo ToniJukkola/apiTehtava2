@@ -9,7 +9,7 @@ import AddFavourite from './components/AddFavourite';
 import RemoveFavourites from './components/Remove';
 
 const URL = 'http://www.omdbapi.com/';
-const API_KEY = '81981094';
+const API_KEY = '';
 
 function App() {
  
